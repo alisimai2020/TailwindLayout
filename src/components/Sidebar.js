@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { HiMenuAlt3 } from "react-icons/hi";
-import { MdOutlineDashboard } from "react-icons/md";
 import { RiDashboard2Fill, RiDashboardFill, RiSettings4Line } from "react-icons/ri";
 import { TbReportAnalytics } from "react-icons/tb";
 import { AiOutlineUser, AiOutlineHeart,AiFillEnvironment } from "react-icons/ai";
@@ -13,8 +11,19 @@ import {BsArrowLeftShort, BsChevronDown} from "react-icons/bs"
 
 
 const Sidebar = () => {
- 
-  const Menus = [
+
+ const storedEmail = localStorage.getItem('email');
+const storedRole = localStorage.getItem('role');
+let Menus;
+if (storedRole === 'USER') {
+
+ Menus = [
+    { title: "Dashboard" }
+  ];
+  
+} else {
+  
+   Menus = [
     { title: "Dashboard" },
     { title: "Pages" },
     
@@ -33,6 +42,7 @@ const Sidebar = () => {
     { title: "Profile" },
     { title: "Logout" },
   ];
+}
   const [Open, Setopen] = useState(true);
 
   return (
@@ -50,18 +60,15 @@ const Sidebar = () => {
           Tailwind
         </h1>
       </div>
+      {storedRole === 'USER' && (
+        <>
 
-      <ul className="pt-2">
+        <ul className="pt-2">
         {Menus.map((menu, index) => (
           <li key={index} className={`text-white-300 text-sm flex items-center ${menu.spacing ? "mt-9" : "mt-2"} gap-x-4 cursor-pointer p-2 bg-light-white rounded-md mt-2 mb-11`}>
             <span className="text-2xl text-white block float-left">
               {menu.title === "Dashboard" && <RiDashboardFill  />}
-              {menu.title === "Pages" && <FaBolt />}
-              {menu.title === "Projects" && <FaWrench />}
-              {menu.title === "Analytics" && <FaRegCalendarAlt />}
-              {menu.title === "Inbox" && <FiMessageSquare />}
-              {menu.title === "Profile" && <AiOutlineUser />}
-              {menu.title === "Logout" && <FaChevronRight />}
+             
             </span>
             <span className={`  text-white text-base font-medium flex-1 duration-300 ${!Open && "hidden"}`}>
               {menu.title}
@@ -72,6 +79,40 @@ const Sidebar = () => {
         ))}
       </ul>
 
+        
+        
+        </>)};
+
+
+
+        {storedRole === 'ADMIN' && (
+          <>
+  
+          <ul className="pt-2">
+          {Menus.map((menu, index) => (
+            <li key={index} className={`text-white-300 text-sm flex items-center ${menu.spacing ? "mt-9" : "mt-2"} gap-x-4 cursor-pointer p-2 bg-light-white rounded-md mt-2 mb-11`}>
+              <span className="text-2xl text-white block float-left">
+                {menu.title === "Dashboard" && <RiDashboardFill  />}
+                {menu.title === "Pages" && <FaBolt />}
+                {menu.title === "Projects" && <FaWrench />}
+                {menu.title === "Analytics" && <FaRegCalendarAlt />}
+                {menu.title === "Inbox" && <FiMessageSquare />}
+                {menu.title === "Profile" && <AiOutlineUser />}
+                {menu.title === "Logout" && <FaChevronRight />}
+              </span>
+              <span className={`  text-white text-base font-medium flex-1 duration-300 ${!Open && "hidden"}`}>
+                {menu.title}
+              </span>
+  
+            
+            </li>
+          ))}
+        </ul>
+  
+          
+          
+          </>)};
+      
         
     </div>
   );

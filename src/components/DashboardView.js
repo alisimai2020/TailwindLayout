@@ -1,14 +1,33 @@
 import React, { useState } from 'react'
 import { FaEnvelope, FaRegBell, FaSearch } from 'react-icons/fa'
 import profile from "../assets/profile.png"
+import { Button } from 'bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 const DashboardView = () => {
+    const history = useNavigate();
+    // Retrieving data from localStorage
+const storedEmail = localStorage.getItem('email');
+const storedRole = localStorage.getItem('role');
+// Using the retrieved data
+const [email, setEmail] = useState(storedEmail);
+
 
     const  [open,setOpen] = useState(false);
     
     const showDropDown = ()=>{
         setOpen (!open)
     }
+
+    const handleLogout = () => {
+        localStorage.removeItem('isAuthenticated');
+        localStorage.removeItem('role');
+        localStorage.removeItem('email');
+        localStorage.removeItem('token');
+         history('/');
+
+       
+      };  
   return (
     <div className='flex items-center  justify-between h-[70px] shadow-lg px-[25px]'>
 
@@ -33,7 +52,7 @@ const DashboardView = () => {
 
                     <div className='flex items-center gap-[15px] relative' onClick={showDropDown}>
                     
-                        <p>Ali Simai Ali</p>
+                        <p>{email}</p>
                         <div className='h-[50px] w-[50px] justify-center cursor-pointer flex items-center rounded-full bg-[#4E73DF]'>
                            <img  className='rounded-full'  src = {profile} alt=''/>
                         </div>
@@ -43,7 +62,9 @@ const DashboardView = () => {
                              <div className='bg-white border h-[120px] w-[150px] absolute bottom-[-135px] z-20 right-0 pt-[15px] pl-[15px] space-y-[10px]' >
                                 <p className='cursor-pointer hover:text-[blue]  font-semibold '>Profile</p>
                                 <p className='cursor-pointer hover:text-[blue]  font-semibold '>Setting</p>
-                                <p className='cursor-pointer hover:text-[blue]  font-semibold '>Log out</p>
+
+                                <p className='cursor-pointer hover:text-[blue]  font-semibold ' onClick={handleLogout}>Logout</p>
+                          
                                
 
                              </div>

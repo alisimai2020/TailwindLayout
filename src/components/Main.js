@@ -3,6 +3,7 @@ import { FaEllipsisV, FaRegCalendarMinus } from 'react-icons/fa'
 
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { useNavigate } from 'react-router-dom';
 
 const data = [
   {
@@ -49,6 +50,15 @@ const data = [
   },
 ];
 const Main = () => {
+  const navigate = useNavigate();
+  const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
+
+  if (!isAuthenticated) {
+    // User is not authenticated, you can choose to navigate to another page or handle it as needed
+    navigate("/");
+    return null;
+  }
+ 
   return (
     <div className='pt-[25px] h-[100vh]  bg-[#ebe7e7] px-[25px]'>
         <div className='flex items-center justify-between'>
@@ -58,7 +68,8 @@ const Main = () => {
         </div>
 
         <div className='grid grid-cols-4 gap-[30px] mt-[25px] pb-15px]'>
-        
+        {isAuthenticated && (
+          <></>)}
             <div className='h-[100px] rounded-[8px] bg-white border-l-[4px] border-[#4E73DF] flex  items-center justify-between  px-[30px] cursor-pointer hover:shadow-lg transform hover:scale-[103%] transation duration-300  '> 
                  <div>
 
